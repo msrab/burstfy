@@ -1,0 +1,17 @@
+{# 
+    src/CommentaireBundle/Resources/views/Commentaire/liste.html.twig 
+    liste des commentaires
+#}
+
+<div class="post-reply">
+    <div id="title-post-send">
+        <hr/><h2>Your comments</h2>
+    </div>
+</div>
+
+<div id='listeCommentaires'>
+{% for commentaire in commentaires %}
+    {{ include('CommentaireBundle:Commentaire:commentaire.html.twig', {'commentaire': commentaire}) }}
+{% endfor %}
+
+</div>

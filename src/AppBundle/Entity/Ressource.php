@@ -1,0 +1,410 @@
+<?php
+/**
+ * src/AppBundle/Entity/Ressource.php
+ * Entité Ressource
+ */
+
+namespace AppBundle\Entity;
+
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ressource
+ *
+ * @ORM\Table(name="ressource")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\RessourceRepository")
+ */
+class Ressource
+{
+    /**
+     * @var int id
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string titre
+     *
+     * @ORM\Column(name="titre", type="string", length=255)
+     */
+    private $titre;
+
+    /**
+     * @var string slug
+     *
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    private $slug;
+    
+    /**
+     * @var \DateTime datePublication
+     *
+     * @ORM\Column(name="datePublication", type="datetime")
+     */
+    private $datePublication;
+
+    /**
+     * @var string description
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
+     * @var int nbrVue
+     *
+     * @ORM\Column(name="nbrVue", type="integer")
+     */
+    private $nbrVue;
+
+    /**
+     * @var string image
+     * 
+     * @ORM\Column(name="image", type="string")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $image;
+
+    /**
+     * @var obj categorie
+     * 
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Categorie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
+    /**
+     * @var string fichier
+     * 
+     * @ORM\Column(name="fichier", type="string")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $fichier;
+    
+    /**
+     *  @var float poidsFichier
+     * 
+     * @ORM\Column(name="poidsFichier", type="float")
+     * @ORM\JoinColumn(nullable=false) 
+     */
+    private $poidsFichier;
+
+    /**
+     * @var obj utilisateur
+     * 
+     * @ORM\ManyToOne(targetEntity="UtilisateurBundle\Entity\Utilisateur", inversedBy="ressources")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $utilisateur;
+
+    /**
+     * @var obj commentaires
+     * 
+     * @ORM\OneToMany(targetEntity="CommentaireBundle\Entity\Commentaire", mappedBy="ressource", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $commentaires;
+
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     *
+     * @return Ressource
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * Set datePublication
+     *
+     * @param \DateTime $datePublication
+     *
+     * @return Ressource
+     */
+    public function setDatePublication($datePublication)
+    {
+        $this->datePublication = $datePublication;
+
+        return $this;
+    }
+
+    /**
+     * Get datePublication
+     *
+     * @return \DateTime
+     */
+    public function getDatePublication()
+    {
+        return $this->datePublication;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Ressource
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set nbrVue
+     *
+     * @param integer $nbrVue
+     *
+     * @return Ressource
+     */
+    public function setNbrVue($nbrVue)
+    {
+        $this->nbrVue = $nbrVue;
+
+        return $this;
+    }
+
+    /**
+     * Get nbrVue
+     *
+     * @return int
+     */
+    public function getNbrVue()
+    {
+        return $this->nbrVue;
+    }
+
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        //parent::__construct();
+        //$slugify = new Slugify();
+        //$this->slug =  $slugify->slugify($this->titre, '_'); 
+        $this->datePublication = new \DateTime();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->nbrVue = 0;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \AppBundle\Entity\Categorie $categorie
+     *
+     * @return Ressource
+     */
+    public function setCategorie(\AppBundle\Entity\Categorie $categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \AppBundle\Entity\Categorie
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \UtilisateurBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return Ressource
+     */
+    public function setUtilisateur(\UtilisateurBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \UtilisateurBundle\Entity\Utilisateur
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \CommentaireBundle\Entity\Commentaire $commentaire
+     *
+     * @return Ressource
+     */
+    public function addCommentaire(\CommentaireBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \CommentaireBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\CommentaireBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Ressource
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Ressource
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set fichier
+     *
+     * @param string $fichier
+     *
+     * @return Ressource
+     */
+    public function setFichier($fichier)
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    /**
+     * Get fichier
+     *
+     * @return string
+     */
+    public function getFichier()
+    {
+        return $this->fichier;
+    }
+
+    /**
+     * Set poidsFichier
+     *
+     * @param float $poidsFichier
+     *
+     * @return Ressource
+     */
+    public function setPoidsFichier($poidsFichier)
+    {
+        $this->poidsFichier = $poidsFichier;
+
+        return $this;
+    }
+
+    /**
+     * Get poidsFichier
+     *
+     * @return float
+     */
+    public function getPoidsFichier()
+    {
+        return $this->poidsFichier;
+    }
+}

@@ -1,0 +1,25 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/pagination.html.twig 
+    Pagination
+#}
+
+<div id="wrapper-oldnew">
+
+    <div class="oldnew">
+        {% if pagination.precedent %}
+            <a href="{{path(route, {'page': pagination.precedent, 'slugCategorie' : slugCategorie})}}">
+                <div class="wrapper-oldnew-prev">
+                    <div id="oldnew-prev"></div>
+                </div>
+            </a>
+        {% endif %}
+
+        {% if pagination.suivant %}
+            <a href="{{path(route, {'page': pagination.suivant, 'slugCategorie' : slugCategorie})}}">
+                <div class="wrapper-oldnew-next">
+                    <div id="oldnew-next"></div>
+                </div>
+            </a>
+        {% endif %}
+    </div>
+</div>

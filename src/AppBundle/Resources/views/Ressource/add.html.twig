@@ -1,0 +1,54 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/add.html.twig 
+    Formulaire de création d'une ressource
+#}
+
+{% extends "base.html.twig" %}
+
+{% block titre %}
+    Ajouter une ressource
+{% endblock titre %}
+
+
+{% block pagination %}
+{% endblock pagination %}
+
+{% block style %}
+    {{parent()}} 
+
+    <style>
+        #ajoutRessource{
+            width: 80%;
+            margin: auto;
+            padding: 3% 5% 3% 5%;
+            background: white;
+        }
+        
+        #ajoutRessource form{
+            width: 50%;
+        }
+        #ajoutRessource label{
+            width: 100%;
+            display: block;
+            padding: 5px 0;
+        }
+    </style>
+
+{% endblock style %}
+
+{% block ressource %}
+    <div id='ajoutRessource'>
+        <h1>Nouvelle ressource</h1>
+
+        {% if error is defined %}
+            <p>{{error}}</p>
+        {% endif %}
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <button type="submit">Enregistrer</button>
+        {{ form_end(form) }}
+    </div>
+        
+{% endblock ressource %}

@@ -1,0 +1,118 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/details.html.twig 
+    Détails d'une ressource
+#}
+
+{% extends "base.html.twig" %}
+
+{% block titre %}
+    {{ressource.titre}} - {{parent()}}
+{% endblock titre %}
+
+{% block style %}
+    {{parent()}} 
+    <link href='{{asset('details.css')}}' rel='stylesheet' type='text/css'>
+{% endblock style %}
+
+{% block pagination %}
+{% endblock pagination %}
+
+{% block ressource %}
+    <div class="title-item">
+        <div class="title-icon" style="float:left;
+             width:68px;
+             height:68px;
+             background: url({{asset(ressource.categorie.image)}}) no-repeat;
+             background-size: 68px;
+             margin-right:20px;"></div>
+        <div class="title-text">{{ ressource.titre }} </div>
+        <div class="title-text-2">{{ ressource.datePublication|date('M d, Y') }} by {{ ressource.utilisateur.prenom }} {{ ressource.utilisateur.nom }}</div>
+    </div>
+
+
+    <div class="work">
+        <figure class="white">
+            <img src="{{asset('media/uploads/images/'~ressource.image)}}" alt="{{ ressource.titre }}" titre="{{ ressource.titre }}" />
+
+        </figure>	
+
+        <div class="wrapper-text-description">
+
+            <div class="wrapper-view">
+                <div class="icon-view"><img src="{{asset('img/icon-eye.svg')}}" alt="" width="24" height="16"/></div>
+                <div class="text-view">{{ render(controller('AppBundle:Ressource:compteurVue', {'slugRessource' : ressource.slug})) }} views</div>
+            </div>
+
+            <div class="wrapper-file">
+                <div class="icon-file"><img src="{{asset(ressource.categorie.image)}}" alt="{{ ressource.categorie.nom }}" width="21" height="21"/></div>
+                <div class="text-file">{{ ressource.categorie.nom }}</div>
+            </div>
+
+            <div class="wrapper-weight">
+                <div class="icon-weight"><img src="{{asset('img/icon-weight.svg')}}" alt="" width="20" height="23"/></div>
+                <div class="text-weight">{{ ressource.poidsFichier|number_format(2,',','.') }} Mo</div>
+            </div>
+
+            <div class="wrapper-desc">
+                <div class="icon-desc"><img src="{{asset('img/icon-desc.svg')}}" alt="" width="24" height="24"/></div>
+                <div class="text-desc">{{ressource.description}} </div>
+            </div>
+
+            <div class="wrapper-download">
+                <div class="icon-download"><img src="{{asset('img/icon-download.svg')}}" alt="" width="19" height="26"/></div>
+                <div class="text-download download"><a  href=""><b>Download</b></a></div>
+            </div>
+
+            {% if idUtilisateur == ressource.utilisateur.id %}
+                <div class="wrapper-download">
+                    <div class="icon-edit"><img src="{{asset('img/edit.svg')}}" alt="" width="19" height="26"/></div>
+                    <div class="text-download"><a href="{{path('site_ressource_edit', {'slugRessource' : ressource.slug})}}"><b>Modifier</b></a></div>
+                </div>
+
+                <div class="wrapper-download">
+                    <div class="icon-delete"><img src="{{asset('img/delete.svg')}}" alt="" width="19" height="26"/></div>
+                    <div class="text-download"><a href="{{path('site_ressource_delete', {'slugRessource' : ressource.slug})}}"><b>Supprimer</b></a></div>
+                </div>
+            {% endif %}
+
+            {{ render(controller('AppBundle:Ressource:getRandom',{ 'idCategorie': ressource.categorie.id, 'maxResultats' : 4, 'idRessource' : ressource.id })) }}
+
+        </div>
+
+        {{ render(controller('CommentaireBundle:Commentaire:getListe', {'ressource' : ressource.id})) }}
+
+        {{ render(controller('CommentaireBundle:Commentaire:add', {'idRessource' : ressource.id})) }}
+
+    </div>
+{% endblock ressource %}
+
+{% block script %}
+    <script>
+        $('#sendComment').click(function (e) {
+            e.preventDefault();
+            var idRessource = $('#idRessource').val();
+            //alert(idRessource);
+            var commentaire = $('#commentairebundle_commentaire_texte').val();
+
+            $.ajax({
+                url: "{{path('commentaire_ajax')}}",
+                method: 'POST',
+                data: {
+                    idRessource: idRessource,
+                    commentaire: commentaire
+                }
+            }).done(function (data) {
+                $('#listeCommentaires').append(data);
+                $('#commentairebundle_commentaire_texte').val('');
+            }).fail(function () {
+                alert('Erreur lors de l\'enregistrement du commentaire.');
+            });
+        });
+
+        $('.download a').click(function (e) {
+            e.preventDefault();
+            window.open('{{path('fichier_upload', {'fichier' : ressource.fichier})}}');
+            return false;
+        });
+    </script>
+{% endblock script %}

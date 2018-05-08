@@ -1,0 +1,41 @@
+# src/AppBundle/Resources/config/routing.yml #
+
+site_ressource_add:
+    path: /add/ressource
+    defaults: { _controller: AppBundle:Ressource:add }
+    requirements:
+        
+site_ressource_edit:
+    path: /edit/ressource/{slugRessource}
+    defaults: { _controller: AppBundle:Ressource:edit }
+    requirements:
+        
+site_ressource_delete:
+    path: /delete/ressource/{slugRessource}
+    defaults: { _controller: AppBundle:Ressource:delete }
+    requirements:
+        
+fichier_upload:
+    path: /fichier/upload/{fichier}
+    defaults: {_controller: AppBundle:Ressource:upload }
+        
+site_ressource_details:
+    path: /ressource/{slugRessource}
+    defaults: { _controller: AppBundle:Ressource:getDetails }
+    requirements:
+        
+site_ressource_categorie:
+    path: /categorie/{slugCategorie}/{pagination}/{page}
+    defaults: 
+        _controller: AppBundle:Ressource:getListe
+        pagination: page
+        page: 1
+    requirements:
+        
+site_ressource:
+    path: /{pagination}/{page}
+    defaults: 
+        _controller: AppBundle:Ressource:getListe
+        pagination: page
+        page: 1
+    requirements:

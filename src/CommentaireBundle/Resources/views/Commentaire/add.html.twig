@@ -1,0 +1,17 @@
+{# 
+    src/CommentaireBundle/Resources/views/Commentaire/add.html.twig 
+    Formulaire d'ajout de commentaire
+#}
+
+<div class="post-send">
+    <div id="main-post-send"> 
+        <div id="title-post-send">Add your comment</div>
+        <form action="{#{ path('commentaire_add', {'idRessource' : commentaire.ressource.id}) }#}" method="POST" id="form">
+            <fieldset>
+                {{ form_widget(formCommentaire) }}
+            </fieldset>
+            <input type="hidden" id="idRessource" value="{{commentaire.ressource.id}}" />
+            <div style="text-align:center;"><input type="submit" name="envoi" value="Envoyer" id='sendComment' /></div>
+        </form>
+    </div>
+</div>

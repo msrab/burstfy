@@ -1,0 +1,16 @@
+
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+utilisateur:
+    resource: "@UtilisateurBundle/Resources/config/routing.yml"
+    prefix: /profile
+
+commentaire:
+    resource: "@CommentaireBundle/Resources/config/routing.yml"
+    prefix: /commentaire
+
+app:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /

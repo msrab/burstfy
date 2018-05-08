@@ -1,0 +1,6 @@
+# src/UtilisateurBundle/Resources/config/routing.yml
+
+profil_edit_avatar:
+    path: /avatar/edit
+    defaults: { _controller: UtilisateurBundle:Utilisateur:editAvatar }
+    requirements:

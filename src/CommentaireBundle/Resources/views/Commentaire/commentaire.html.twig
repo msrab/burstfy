@@ -1,0 +1,10 @@
+{# 
+    src/CommentaireBundle/Resources/views/Commentaire/commentaire.html.twig 
+    un commentaire
+#}
+
+<div class="post-reply">
+    <div class="image-reply-post" style="float:left;width:65px;height:65px;background: url({{asset('media/uploads/avatars/'~commentaire.utilisateur.avatar)}}) no-repeat;top:0;"></div>
+    <div class="name-reply-post">{{commentaire.utilisateur.prenom}} {{commentaire.utilisateur.nom}}</div>
+    <div class="text-reply-post">{{commentaire.texte}}</div>
+</div>

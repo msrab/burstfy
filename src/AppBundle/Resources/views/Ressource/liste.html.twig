@@ -1,0 +1,26 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/liste.html.twig 
+    Liste des ressources
+#}
+
+{% extends "base.html.twig" %}
+
+{% block ressource %}
+    <section class="work">
+        {% for ressource in ressources %}
+            <figure class="white">
+                <a href="{{path('site_ressource_details', {'slugRessource': ressource.slug})}}">
+                    <img src="{{asset('media/uploads/images/'~ressource.image)}}" alt="{{ ressource.titre }}" titre="{{ ressource.titre }}" />
+                    <dl>
+                        <dt>{{ ressource.titre }}</dt>
+                        <dd>{{ ressource.description }}. By {{ ressource.utilisateur.nom }} {{ ressource.utilisateur.prenom }}.</dd>	
+                    </dl>
+                </a>
+                <div id="wrapper-part-info">
+                    <div class="part-info-image"><img src="{{ asset(ressource.categorie.image)}}" alt="{{ ressource.categorie.nom }}" width="28" height="28"/></div>
+                    <div id="part-info">{{ ressource.titre }}</div>
+                </div>
+            </figure>	
+        {% endfor %}
+    </section>
+{% endblock ressource %}

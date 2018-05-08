@@ -1,0 +1,16 @@
+{# 
+    src/AppBundle/Resources/views/Categorie/liste.html.twig 
+    liste des catégories
+#}
+
+{% block menu %}
+    <div id="wrapper-bouton-icon">
+        {% for categorie in categories %}
+            <div id="bouton-ai">
+                <a href="{{path('site_ressource_categorie', {'slugCategorie': categorie.slug})}}" >
+                    <img src="{{asset(categorie.image)}}" alt="{{ categorie.nom }}" title="{{ categorie.nom }}" height="28" width="28">
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock menu %}

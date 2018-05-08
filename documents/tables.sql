@@ -1,0 +1,68 @@
+CREATE TABLE commentaire (
+		id INT AUTO_INCREMENT NOT NULL, 
+		utilisateur_id INT DEFAULT NULL, 
+		ressource_id INT DEFAULT NULL, 
+		datePublication DATETIME NOT NULL, 
+		texte LONGTEXT NOT NULL, 
+		INDEX IDX_67F068BCFB88E14F (utilisateur_id), 
+		INDEX IDX_67F068BCFC6CD52A (ressource_id), 
+		PRIMARY KEY(id)
+	) 
+	DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE utilisateur (
+		id INT AUTO_INCREMENT NOT NULL, 
+		username VARCHAR(180) NOT NULL, 
+		username_canonical VARCHAR(180) NOT NULL, 
+		email VARCHAR(180) NOT NULL, 
+		email_canonical VARCHAR(180) NOT NULL, 
+		enabled TINYINT(1) NOT NULL, 
+		salt VARCHAR(255) DEFAULT NULL, 
+		password VARCHAR(255) NOT NULL, 
+		last_login DATETIME DEFAULT NULL, 
+		confirmation_token VARCHAR(180) DEFAULT NULL, 
+		password_requested_at DATETIME DEFAULT NULL, 
+		roles LONGTEXT NOT NULL COMMENT '(DC2Type:array)', 
+		nom VARCHAR(255) NOT NULL, 
+		prenom VARCHAR(255) NOT NULL, 
+		dateInscription DATE NOT NULL, 
+		avatar VARCHAR(255) NOT NULL, 
+		UNIQUE INDEX UNIQ_1D1C63B392FC23A8 (username_canonical), 
+		UNIQUE INDEX UNIQ_1D1C63B3A0D96FBF (email_canonical), 
+		UNIQUE INDEX UNIQ_1D1C63B3C05FB297 (confirmation_token), 
+		PRIMARY KEY(id)
+	) 
+	DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE categorie (
+		id INT AUTO_INCREMENT NOT NULL, 
+		nom VARCHAR(255) NOT NULL, 
+		slug VARCHAR(128) NOT NULL, 
+		image VARCHAR(255) NOT NULL, 
+		UNIQUE INDEX UNIQ_497DD634989D9B62 (slug), 
+		PRIMARY KEY(id)
+	) 
+	DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+CREATE TABLE ressource (
+		id INT AUTO_INCREMENT NOT NULL, 
+		categorie_id INT NOT NULL, 
+		utilisateur_id INT DEFAULT NULL, 
+		titre VARCHAR(255) NOT NULL, 
+		slug VARCHAR(128) NOT NULL, 
+		datePublication DATETIME NOT NULL, 
+		description LONGTEXT NOT NULL, 
+		nbrVue INT NOT NULL, 
+		image VARCHAR(255) NOT NULL, 
+		fichier VARCHAR(255) NOT NULL,
+		UNIQUE INDEX UNIQ_939F4544989D9B62 (slug), 
+		INDEX IDX_939F4544BCF5E72D (categorie_id), 
+		INDEX IDX_939F4544FB88E14F (utilisateur_id), 
+		PRIMARY KEY(id)
+	) 
+	DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE commentaire ADD CONSTRAINT FK_67F068BCFB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id);
+ALTER TABLE commentaire ADD CONSTRAINT FK_67F068BCFC6CD52A FOREIGN KEY (ressource_id) REFERENCES ressource (id);
+ALTER TABLE ressource ADD CONSTRAINT FK_939F4544BCF5E72D FOREIGN KEY (categorie_id) REFERENCES categorie (id);
+ALTER TABLE ressource ADD CONSTRAINT FK_939F4544FB88E14F FOREIGN KEY (utilisateur_id) REFERENCES utilisateur (id);

@@ -1,0 +1,79 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/edit.html.twig 
+    Formulaire d'édition d'une ressource
+#}
+
+
+
+{% extends "base.html.twig" %}
+
+
+
+{% block titre %}
+    Ajouter une ressource
+{% endblock titre %}
+
+
+{% block pagination %}
+{% endblock pagination %}
+
+{% block style %}
+    {{parent()}} 
+
+    <style>
+        #ajoutRessource{
+            width: 80%;
+            margin: auto;
+            padding: 3% 5% 3% 5%;
+            background: white;
+        }
+
+        #ajoutRessource form{
+            width: 50%;
+        }
+        #ajoutRessource label{
+            width: 100%;
+            display: block;
+            padding: 5px 0;
+        }
+    </style>
+
+{% endblock style %}
+
+{% block ressource %}
+    <div id='ajoutRessource'>
+        <h1>Modifier une ressource</h1>
+
+        <form method="post" enctype="multipart/form-data">
+            <div id="appbundle_ressource">
+                <div>
+                    <label for="appbundle_ressource_titre" class="required">Titre</label>
+                    <input type="text" id="appbundle_ressource_titre" name="appbundle_ressource[titre]" required="required" maxlength="255" value="{{ressource.titre}}" />
+                </div>
+                <div>
+                    <label for="appbundle_ressource_description" class="required">Description</label>
+                    <textarea id="appbundle_ressource_description" name="appbundle_ressource[description]" required="required">{{ressource.description}}</textarea>
+                </div>
+                <div>
+                    <label for="appbundle_ressource_categorie" class="required">Categorie</label>
+                    <select id="appbundle_ressource_categorie" name="appbundle_ressource[categorie]">
+                        {% for categorie in categories %}
+                            <option value="{{categorie.id}}" {% if ressource.categorie.id == categorie.id %} selected="selected" {% endif %}>{{categorie.nom}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="appbundle_ressource_image" class="required">Image</label>
+                    <input type="file" id="appbundle_ressource_image" name="appbundle_ressource[image]" accept="jpg|jpeg|png" />
+                </div>
+                <div>
+                    <label for="appbundle_ressource_fichier" class="required">Fichier</label>
+                    <input type="file" id="appbundle_ressource_fichier" name="appbundle_ressource[fichier]" />
+                </div>
+            </div>
+
+            <button type="submit">Enregistrer</button>
+
+        </form>
+    </div>
+{% endblock ressource %}

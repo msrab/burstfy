@@ -1,0 +1,19 @@
+# src/CommentaireBundle/Resources/config/routin.yml #
+
+#commentaire_add:
+#    path: /add/{idRessource}
+#    defaults: { _controller: CommentaireBundle:Commentaire:add }
+#    requirements:
+#        _method: POST
+#        ressource: \d+
+  
+commentaire_ajax:
+    path: /commentaire/ajax
+    defaults: {_controller: CommentaireBundle:Commentaire:ajax}     
+
+commentaire_homepage:
+    path:     /
+    defaults: { _controller: CommentaireBundle:Default:index }
+
+
+    

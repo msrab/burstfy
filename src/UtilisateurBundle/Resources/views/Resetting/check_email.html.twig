@@ -1,0 +1,56 @@
+{# src/UtilisateurBundle/Resources/views/Resetting/check_email.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block menu %}{% endblock menu %}
+
+{% block style %}
+    {{parent()}}
+
+    <style>
+        #formConnexion{
+            width: 30%;
+            float:right;
+            font-size: 20px;
+            box-sizing: border-box;
+
+        #imgAccueil{
+            width: 65%;
+            float: left;
+        }
+
+        #imgAccueil img{
+            width: 100%;
+        }
+    </style>
+{% endblock style %}
+
+{% block header %}
+    <div id="wrapper-header">
+        <div id="main-header" class="object">
+            <div class="logo"><a href="{{ path('site_ressource') }}"><img src="{{asset('img/logo-burst.png')}}" alt="logo platz" height="38" width="90"></a></div>
+            <div id='user'>
+                <a style='color: #666666;' href='{{path('fos_user_registration_register')}}'>Inscription</a>
+            </div>
+            <div id='user'>
+                <a href='{{path('fos_user_security_login')}}'>Connexion</a> 
+            </div> 
+            <div id="stripes"></div>
+        </div>
+
+    </div>
+{% endblock header %}
+
+{% block blockPrincipal %}
+    <div class="container object">
+        <div id="main-container-image">
+            <div id="imgAccueil">
+                <img src="{{asset('img/img-site.png')}}" alt="" />
+            </div>
+
+            <div id="formConnexion">
+                <h2>Un message vous a été envoyé par courriel</h2>
+            </div>
+        </div>
+    </div>
+{% endblock blockPrincipal %}

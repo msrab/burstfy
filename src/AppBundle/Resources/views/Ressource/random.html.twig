@@ -1,0 +1,19 @@
+{# 
+    src/AppBundle/Ressources/views/Ressource/random.html.twig 
+    Liste des ressources aléatoires
+#}
+
+<div class="wrapper-morefrom">
+    <div class="text-morefrom">More from .{{categorie.slug}}</div>
+    <div class="image-morefrom">
+        {% set i = 1 %}
+        {% for ressource in ressources %}
+            <a href="{{path('site_ressource_details', {'slugRessource': ressource.slug})}}">
+                <div class="image-morefrom-{{i}}">
+                    <img src="{{asset('media/uploads/images/'~ressource.image)}}" alt="{{ ressource.titre }}" width="430" height="330"/>
+                </div>
+            </a>
+                {% set i = i+1 %}
+        {% endfor %}
+    </div>
+</div>

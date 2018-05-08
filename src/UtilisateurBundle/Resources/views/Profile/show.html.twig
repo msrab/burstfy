@@ -1,0 +1,99 @@
+{# src/UtilisateurBundle/Resources/views/Profile/show.html.twig #}
+
+{% extends "base.html.twig" %}
+
+{% block titre %}
+    Mon profil - {{parent()}}
+{% endblock titre %}
+
+{% block style %}
+    {{parent()}}
+
+    <style>
+        #profileDonnees{
+            width: 60%;
+            float: right;
+            background: white;
+            padding: 30px;
+            margin-right: 20px;
+        }
+        #top:after{
+            content: '';
+            display: block;
+            clear: both;
+        }
+        table{
+            width: 90%;
+            margin: auto;
+            font-size: 18px;
+        }
+        table img{
+            width: 80%;
+            margin: auto;
+        }
+        td{
+            width: 33%;
+        }
+        
+        
+        #profileMenu{
+            width: 25%;
+            float: left;
+            background: #2e2d30;
+            padding: 20px 10px;
+            margin-left: 20px;
+        }
+        #profileMenu ul{
+            width: auto;
+            margin: auto;
+        }
+        #profileMenu li{
+            padding: 15px 20px;
+        }
+        #profileMenu a{
+            color:white;
+            font-size: 18px;
+        }
+    </style>
+
+{% endblock style %}
+
+{% block blockPrincipal %}
+    <div class="container object">
+
+        <div id="main-container-image">
+            <div id='top'>
+                <div id='profileDonnees'>
+                    <h2>Mon profil</h2>
+                    
+                    <table>
+                        <tr>
+                            <td rowspan='4'><img src='{{asset('media/uploads/avatars/'~user.avatar)}}' alt='{{ user.prenom }} {{ user.nom }}' title='{{ user.prenom }} {{ user.nom }}' /></td>
+                            <td>Pseudo</td>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <td>Nom</td>
+                            <td>{{ user.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Prenom</td>
+                            <td>{{ user.prenom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                    </table>
+                </div>
+                {{ include('UtilisateurBundle:Profile:menu.html.twig') }}
+            </div>
+            <div id='profileRessources'>
+                <h2>Mes ressources</h2>
+                {{ render(controller('AppBundle:Ressource:getMyListe', {'utilisateur' : user})) }}
+            </div>
+        </div>
+    </div>
+{% endblock blockPrincipal %}
+
+

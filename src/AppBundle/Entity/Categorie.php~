@@ -1,0 +1,142 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Cocur\Slugify\Slugify;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Categorie
+ *
+ * @ORM\Table(name="categorie")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategorieRepository")
+ */
+class Categorie
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="image", type="string", length=255)
+     */
+    private $image;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Extension", mappedBy="categorie", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $extensions;
+
+    
+    public function __construct()
+    {
+        parent::__construct();
+        $this->extensions = new \Doctrine\Common\Collections\ArrayCollection();
+        $slugify = new Slugify();
+        $this->slug =  $slugify->slugify($this->nom, '_'); 
+    }
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Categorie
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     *
+     * @return Categorie
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Categorie
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+}

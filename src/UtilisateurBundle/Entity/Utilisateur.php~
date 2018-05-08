@@ -1,0 +1,268 @@
+<?php
+// src/UtilisateurBundle/Entity/Utilisateur.php
+
+namespace UtilisateurBundle\Entity;
+
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="utilisateur")
+ */
+class Utilisateur extends BaseUser
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    protected $nom;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=255)
+     */
+    protected $prenom;
+    
+    /**
+     *
+     * @var string
+     * 
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    protected $slug;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateInscription", type="date")
+     */
+    protected $dateInscription;
+    
+    /**
+     * @ORM\Column(name="avatar", type="string")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $avatar;
+    
+    /**
+     * 
+     */
+
+    /**
+     * @ORM\OneToMany(targetEntity="CommentaireBundle\Entity\Commentaire", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $commentaires;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Ressource", mappedBy="utilisateur", cascade={"remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    protected $ressources;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->avatar = "defaut.jpg";
+        $this->dateInscription = new \DateTime();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ressources = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Utilisateur
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set prenom
+     *
+     * @param string $prenom
+     *
+     * @return Utilisateur
+     */
+    public function setPrenom($prenom)
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    /**
+     * Get prenom
+     *
+     * @return string
+     */
+    public function getPrenom()
+    {
+        return $this->prenom;
+    }
+
+    /**
+     * Set dateInscription
+     *
+     * @param \DateTime $dateInscription
+     *
+     * @return Utilisateur
+     */
+    public function setDateInscription($dateInscription)
+    {
+        $this->dateInscription = $dateInscription;
+
+        return $this;
+    }
+
+    /**
+     * Get dateInscription
+     *
+     * @return \DateTime
+     */
+    public function getDateInscription()
+    {
+        return $this->dateInscription;
+    }
+
+    /**
+     * Add commentaire
+     *
+     * @param \CommentaireBundle\Entity\Commentaire $commentaire
+     *
+     * @return Utilisateur
+     */
+    public function addCommentaire(\CommentaireBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires[] = $commentaire;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaire
+     *
+     * @param \CommentaireBundle\Entity\Commentaire $commentaire
+     */
+    public function removeCommentaire(\CommentaireBundle\Entity\Commentaire $commentaire)
+    {
+        $this->commentaires->removeElement($commentaire);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * Add ressource
+     *
+     * @param \AppBundle\Entity\Ressource $ressource
+     *
+     * @return Utilisateur
+     */
+    /*public function addRessource(\AppBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources[] = $ressource;
+
+        return $this;
+    }*/
+
+    /**
+     * Remove ressource
+     *
+     * @param \AppBundle\Entity\Ressource $ressource
+     */
+   /* public function removeRessource(\AppBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources->removeElement($ressource);
+    }*/
+
+    /**
+     * Get ressources
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRessources()
+    {
+        return $this->ressources;
+    }
+
+    /**
+     * Set avatar
+     *
+     * @param string $avatar
+     *
+     * @return Utilisateur
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * Get avatar
+     *
+     * @return string
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * Add ressource
+     *
+     * @param \AppBundle\Entity\Ressource $ressource
+     *
+     * @return Utilisateur
+     */
+    public function addRessource(\AppBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources[] = $ressource;
+
+        return $this;
+    }
+
+    /**
+     * Remove ressource
+     *
+     * @param \AppBundle\Entity\Ressource $ressource
+     */
+    public function removeRessource(\AppBundle\Entity\Ressource $ressource)
+    {
+        $this->ressources->removeElement($ressource);
+    }
+}
